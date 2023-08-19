@@ -21,18 +21,21 @@ background-color: transparent;
             <div class="card-body">
                 <h5 class="card-title">Promt to SQL</h5>
                 <p class="card-text">Send a prompt.</p>
-                <input type="text" name="sql_promt" class="form-control" placeholder="Try Something like: How many models were finetuned using BERT as base model?">
+                <input type="text" name="sql_promt" class="form-control"
+                    placeholder="Try Something like: How many models were finetuned using BERT as base model?">
                 <p> </p>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </div>
     </form>
     {% if response %}
-    <div class="card text-center text-white" style="background-color: #283a4dc8;">
-        <div class="card-body">
-            {{ response }}
+    <div class="response-container">
+        <div class="card text-center text-white response-card bg-black">
+            <div class="card-body">
+                {{ response }}
+            </div>
         </div>
     </div>
+    {% endif %}
 </div>
-{% endif %}
 {% endblock cardbody %}

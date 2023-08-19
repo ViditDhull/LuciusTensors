@@ -1,74 +1,45 @@
 {% extends "layout.html" %}
+
 {% block cardclass %}
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-    }
-
-    .container {
-        background-color: #869368c8;
-        border-radius: 10px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        width: 400px;
-    }
-
-    h1, h2 {
-        text-align: center;
-    }
-
-    textarea {
-        width: 100%;
-        border: 1px solid #cccccc19;
-        border-radius: 5px;
-        padding: 10px;
-        resize: vertical;
-    }
-
-    input[type="submit"] {
-        background-color: #007bff;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    input[type="submit"]:hover {
-        background-color: #0056b3;
-    }
-
-    #optimized-code-placeholder {
-        background-color: #93686840;
-        border: 1px solid #cccccc29;
-        border-radius: 5px;
-        padding: 10px;
-        margin-top: 10px;
-        font-family: monospace;
-        white-space: pre;
-    }
-</style>
+.card {
+border: none;
+height: auto;
+width: auto;
+max-width: 700px;
+margin: 40px auto;
+background-color: transparent;
+}
+.response-code {
+font-family: 'Courier New', monospace;
+white-space: pre-wrap;
+background-color: #283a4dc8;
+padding: 10px;
+}
 {% endblock cardclass %}
 
 {% block cardbody %}
-<div class="container">
-    <h1>Code Optimizer</h1>
-    <form method="post">
+<div class="card placeholder-wave" style="background-color: #282c4dc8;">
+    <form method="POST">
         {% csrf_token %}
-        <label for="input-code">Enter your code:</label><br>
-        <textarea id="input-code" name="input_code" rows="10" cols="50"></textarea><br>
-        <input type="submit" value="Optimize Code">
+        <div class="card text-center text-white">
+            <div class="card-body">
+                <h5 class="card-title">Code Optimization</h5>
+                <p class="card-text">Enter your code for optimization.</p>
+                <textarea name="input_code" class="form-control" rows="8"
+                    placeholder="Enter your code here..."></textarea>
+                <p></p>
+                <button type="submit" class="btn btn-primary">Optimize</button>
+            </div>
+        </div>
     </form>
-
     {% if optimized_code %}
-    <h2>Optimized Code:</h2>
-    <div id="optimized-code-placeholder">{{ optimized_code }}</div>
+    <div class="response-container">
+        <div class="card text-center text-white response-card">
+            <div class="card-body">
+                <pre class="response-code">{{ optimized_code }}</pre>
+            </div>
+        </div>
+    </div>
     {% endif %}
 </div>
 {% endblock cardbody %}
