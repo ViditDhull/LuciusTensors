@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+{% block cardclass %}
+        body {
+            background-color: #212529;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        .profile-img {
+            display: block;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+            border-radius: 10%;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        .contact-details {
+            text-align: left;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+        {% endblock cardclass %}
+        {% block cardbody %}
+    <div class="container">
+        <img src="/static/img/profile_photo.jpg" alt="Profile Photo" class="profile-img">
+        <h1>Vidit Dhull</h1>
+        <p style="text-align: center;">Passionate Developer | Data Science Enthusiast | MLOps Practitioner</p>
+        <p style="text-align: center;">Collaborate with me:  
+            <a href="https://github.com/ViditDhull/" target="_blank">
+                <img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub"></a>
+        </p>
+        <p>Welcome to LuciusTensors. I'm Vidit Dhull, the visionary behind this website. With a profound passion for coding and creating exceptional digital 
+            experiences, I specialize in data science and mlops. I tirelessly develop and enhance this platform, offering centralized access to AI products. 
+            Embracing the ever-evolving world of technology, I find joy in coding and exploring limitless possibilities. Beyond the digital realm, I also indulge in 
+            the tranquil hobby of driving. This About page serves as an introduction to me, highlighting my journey, dedication, and passion for coding and technology.</p>
+
+            <div class="contact-details">
+                <h2>Profile Details</h2>
+                <ul>
+                    <li><strong>Name:</strong> Vidit Dhull</li>
+                    <li><strong>Location:</strong> Bengaluru, India</li>
+                    <li><strong>Email:</strong> vidit.dh@gmail.com</li>
+                </ul>
+            </div>
+            <!-- <div class="contact-details">
+                <h2>Contact Me</h2>
+                <ul>
+                    <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/vidit-dhull-045665236/" target="_blank">Visit Profile</a></li>
+                    <li><strong>GitHub:</strong> <a href="https://github.com/ViditDhull/" target="_blank">Visit Profile</a></li>
+                    <li><strong>Instagram:</strong> <a href="https://www.instagram.com/viditdhull/" target="_blank">Visit Profile</a></li>
+                </ul>
+            </div> -->
+        
+        <!-- <h2>Education</h2>
+        <p>Include your educational background here.</p>
+
+        <h2>Experience</h2>
+        <p>Include your work experience and relevant projects here.</p>
+
+        <h2>Skills</h2>
+        <ul>
+            <li>Skill 1</li>
+            <li>Skill 2</li>
+            <li>Skill 3</li>
+             Add more skills as needed 
+        </ul> -->
+    </div>
+    {% endblock cardbody %}

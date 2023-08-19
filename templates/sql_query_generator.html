@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block cardclass %}
+.card {
+border: none;
+height: auto;
+width: auto;
+max-width: 700px;
+margin-top: 40px;
+margin-bottom: auto;
+margin-left: auto;
+margin-right: auto;
+background-color: transparent;
+}
+{% endblock cardclass %}
+
+{% block cardbody %}
+<div class="card placeholder-wave" style="background-color: #4d2828c8;">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="card text-center text-white">
+            <div class="card-body">
+                <h5 class="card-title">Promt to SQL</h5>
+                <p class="card-text">Send a prompt.</p>
+                <input type="text" name="sql_promt" class="form-control" placeholder="Try Something like: How many models were finetuned using BERT as base model?">
+                <p> </p>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
+    {% if response %}
+    <div class="card text-center text-white" style="background-color: #283a4dc8;">
+        <div class="card-body">
+            {{ response }}
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock cardbody %}
