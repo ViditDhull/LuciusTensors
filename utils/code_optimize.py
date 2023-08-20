@@ -8,7 +8,7 @@ def optimize_code(user_code):
     response = openai.Completion.create(
         engine="text-davinci-003",
         prompt=prompt,
-        max_tokens=100
+        max_tokens=1024
     )
     
     optimized_code = response.choices[0].text.strip()

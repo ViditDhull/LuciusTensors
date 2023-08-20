@@ -8,7 +8,7 @@ def generate_sql_query(nl_prompt):
     response = openai.Completion.create(
         engine = "text-davinci-003",
         prompt = prompt,
-        max_tokens = 50
+        max_tokens = 200
     )
     
     sql_query = response.choices[0].text.strip()

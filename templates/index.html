@@ -9,30 +9,55 @@ margin-bottom: 30%;
 max-block-size: 70%;
 }
 .text-center{
-  margin-top: 40px;
-  margin-bottom: 10px;
-  margin-left: 10%;
-  margin-right: 10%;
+margin-top: 40px;
+margin-bottom: 10px;
+margin-left: 10%;
+margin-right: 10%;
 }
 {% endblock cardclass %}
 
 {% block cardbody %}
-<div class="text-center">
-  <h4 class="text-white">"Your Data, Your Trust: We prioritize your privacy by not storing any user data, 
-    offering you complete control.<br> Experience the convenience of our AI-powered products with peace of mind, 
-    setting us apart from the rest."</h4>
+<div>
+  <img src="/static/img/front_page.png" class="card-img-top" alt="...">
 </div>
+
 <div class="row row-cols-1 row-cols-md-3 g-0">
 
   <div class="col">
     <div class="card h-70">
-      <img src="/static/img/qg_card.jpg" class="card-img-top" alt="...">
+      <img src="/static/img/query_generator_card.jpg" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">SQL Query Generator</h5>
-        <p class="card-text">Streamline your database operations with our SQL Query Generator, generating queries at your fingertips.</p>
+        <p class="card-text">Empower your database interactions effortlessly using our AI SQL Query Generator, crafting
+          precise queries from your prompts.</p>
         <a href="sql_query_generator" class="btn btn-secondary">Try now&#x2197</a>
       </div>
     </div>
   </div>
+
+  <div class="col">
+    <div class="card h-70">
+      <img src="/static/img/co_card.jpg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Code Optimizer</h5>
+        <p class="card-text">Streamline your code's performance with our AI Code Optimizer, turn input code into
+          optimized brilliance.</p>
+        <a href="code_optimizer" class="btn btn-secondary">Try now&#x2197</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card h-70">
+      <img src="/static/img/summarizer.jpg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Document Summarizer</h5>
+        <p class="card-text">Condense lengthy documents effortlessly with our Document Summarizer—get quick, accurate
+          summaries.</p>
+        <a class="btn btn-secondary">Upcoming</a>
+      </div>
+    </div>
+  </div>
+
 </div>
 {% endblock cardbody %}
