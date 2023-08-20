@@ -13,9 +13,11 @@ def sql_query_generator(request):
     response = None
     
     if request.method == 'POST':
-        user_input = request.POST.get('sql_promt')
-        response = generate_sql_query(user_input)
-        
+        user_input = request.POST.get('sql_prompt')
+        try:
+            response = generate_sql_query(user_input)
+        except:
+            response = "There was an error completing your request."
     return render(request, 'sql_query_generator.html', {'title': title, 'response': response})
 
 # Code Optimizer
@@ -25,7 +27,10 @@ def code_optimizer(request):
 
     if request.method == 'POST':
         user_input = request.POST.get('input_code')
-        response = optimize_code(user_input)
+        try:
+            response = optimize_code(user_input)
+        except:
+            response = "There was an error completing your request."
 
     return render(request, 'code_optimizer.html', {'title':title, 'optimized_code':response})
 
