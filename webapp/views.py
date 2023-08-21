@@ -17,7 +17,7 @@ def sql_query_generator(request):
         try:
             response = generate_sql_query(user_input)
         except:
-            response = "There was an error completing your request."
+            response = "An error occurred while processing your request. Please try again later."
     return render(request, 'sql_query_generator.html', {'title': title, 'response': response})
 
 # Code Optimizer
@@ -30,7 +30,7 @@ def code_optimizer(request):
         try:
             response = optimize_code(user_input)
         except:
-            response = "There was an error completing your request."
+            response = "An error occurred while processing your request. Please try again later."
 
     return render(request, 'code_optimizer.html', {'title':title, 'optimized_code':response})
 
