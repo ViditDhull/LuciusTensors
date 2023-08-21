@@ -22,4 +22,6 @@ LuciusTensors is a platform where technology, data science, and machine learning
 
 We welcome contributions that align with our passion for coding, AI, and innovation. Have ideas, enhancements, or bug fixes? Open an issue or submit a pull request!
 
+---
+
 Let's shape the future together at LuciusTensors! 🌟
