@@ -1,23 +1,23 @@
 {% extends "layout.html" %}
 {% block cardclass %}
 .card {
+background-color: #72121b;
 border: none;
 height: auto;
 width: auto;
-max-width: 700px;
+max-width: 800px;
 margin-top: 40px;
 margin-bottom: auto;
 margin-left: auto;
 margin-right: auto;
-background-color: transparent;
 }
 {% endblock cardclass %}
 
 {% block cardbody %}
-<div class="card placeholder-wave" style="background-color: #4d2828c8;">
+<div class="card">
     <form method="POST">
         {% csrf_token %}
-        <div class="card text-center text-white">
+        <div class="card text-center text-white" style="background: transparent;">
             <div class="card-body">
                 <h5 class="card-title">Prompt to SQL</h5>
                 <p class="card-text">Send a prompt.</p>
@@ -30,7 +30,7 @@ background-color: transparent;
     </form>
     {% if response %}
     <div class="response-container">
-        <div class="card text-center text-white response-card bg-black">
+        <div class="card text-center text-white response-card bg-black" style="background: transparent;">
             <div class="card-body">
                 {{ response }}
             </div>
