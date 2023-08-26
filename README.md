@@ -25,3 +25,9 @@ We welcome contributions that align with our passion for coding, AI, and innovat
 ---
 
 Let's shape the future together at LuciusTensors! 🌟
+
+<p align="center">
+  <a href="https://github.com/LuciusTensors">
+    <img src="https://komarev.com/ghpvc/?username=LuciusTensors&color=red&style=flat)" />
+  </a>
+</p>
