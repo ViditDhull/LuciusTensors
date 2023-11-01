@@ -21,7 +21,9 @@ margin-right: auto;
             <div class="card-body">
                 <h5 class="card-title">Query PDF</h5>
                 <p class="card-text">Upload the file.</p>
-                <input type="file" accept=".txt" name="summarize_file" class="form-control">
+                <input type="file" accept=".pdf" name="query_pdf_file" class="form-control">
+                <p> </p>
+                <input type="text" name="query_pdf_query" class="form-control" placeholder="Enter your query.">
                 <p> </p>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
@@ -29,9 +31,11 @@ margin-right: auto;
     </form>
     {% if response %}
     <div class="response-container">
-        <div class="card text-center text-white response-card bg-black" style="background: transparent;">
+        <div class="card text-white response-card bg-black" style="background: transparent;">
             <div class="card-body">
-                {{ response }}
+                <b>Question</b> - {{ query }}
+                <br>
+                <b>Response</b> - {{ response }}
             </div>
         </div>
     </div>

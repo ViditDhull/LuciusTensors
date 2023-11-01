@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from utils.prompt_to_sql import generate_sql_query
 from utils.code_optimize import optimize_code
+from utils.query_pdf import pdf_query_generator
 
 # Home
 def index(request):
@@ -22,7 +23,20 @@ def sql_query_generator(request):
 
 # Query Pdf
 def query_pdf(request):
-    return render(request, 'query_pdf.html')
+    title = "Query PDF"
+    response = None
+    user_query = None
+    if request.method == 'POST' and request.FILES['query_pdf_file']:
+        upload = request.FILES['query_pdf_file']
+        user_query = request.POST.get('query_pdf_query')
+        try:
+            result = pdf_query_generator(upload, user_query)
+            response = result['result']
+           
+        except:
+            response = "An error occurred while processing your request. Please try again later."
+
+    return render(request, 'query_pdf.html', {'title': title, 'query': user_query, 'response': response})
 
 
 # Code Optimizer
