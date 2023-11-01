@@ -20,6 +20,11 @@ def sql_query_generator(request):
             response = "An error occurred while processing your request. Please try again later."
     return render(request, 'sql_query_generator.html', {'title': title, 'response': response})
 
+# Query Pdf
+def query_pdf(request):
+    return render(request, 'query_pdf.html')
+
+
 # Code Optimizer
 def code_optimizer(request):
     title = "Code Optimizer"
