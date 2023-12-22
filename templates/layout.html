@@ -14,10 +14,9 @@
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <style>
         body,
-        nav {
+        nav{
             background-color: #13323bcd;
         }
-
         .dropdown:hover .dropdown-menu {
             display: block;
         }
@@ -30,13 +29,7 @@
             color: rgba(255, 255, 255, 0.75);
         }
 
-            {
-            % block cardclass %
-        }
-
-            {
-            % endblock %
-        }
+    {% block cardclass %} {% endblock %}
     </style>
     <script>
         $(document).ready(function () {
@@ -47,16 +40,6 @@
                 }
             });
         });     
-    </script>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QDG11M2KX7"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-QDG11M2KX7');
     </script>
 </head>
 
@@ -72,8 +55,8 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
-                        <a class="nav-link active navbar-dark dropdown-toggle" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                        <a class="nav-link active navbar-dark dropdown-toggle" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             Product
                         </a>
                         <ul class="dropdown-menu bg-dark">
@@ -91,7 +74,15 @@
     </nav>
 
     {% block cardbody %}{% endblock %}
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QDG11M2KX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'G-QDG11M2KX7');
+</script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
