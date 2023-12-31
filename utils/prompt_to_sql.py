@@ -1,15 +1,11 @@
-import openai
 from utils.api_key import api_key
+import google.generativeai as genai
 
-openai.api_key = api_key
+genai.configure(api_key = api_key)
 
-def generate_sql_query(nl_prompt):
-    prompt = f"Generate an SQL query to the prompt: {nl_prompt}"
-    response = openai.Completion.create(
-        engine = "text-davinci-003",
-        prompt = prompt,
-        max_tokens = 200
-    )
+def generate_sql_query(nlp_prompt):
+    prompt = f"Write a sql query for this prompt and do not inlcude 'sql' or any other text in response {nlp_prompt}"
+    model = genai.GenerativeModel('gemini-pro')
+    response = model.generate_content(prompt)
     
-    sql_query = response.choices[0].text.strip()
-    return sql_query
+    return response.text
