@@ -8,6 +8,9 @@ height: auto;
 width: auto;
 max-width: 800px;
 margin: 40px auto;
+margin-bottom: auto;
+margin-left: auto;
+margin-right: auto;
 }
 .response-code {
 font-family: 'Courier New', monospace;
@@ -23,18 +26,26 @@ padding: 10px;
         {% csrf_token %}
         <div class="card text-center text-white" style="background: transparent;">
             <div class="card-body">
-                <h5 class="card-title">Code Optimization</h5>
-                <p class="card-text">Enter your code for optimization.</p>
-                <textarea name="input_code" class="form-control text-white" rows="8"
-                    placeholder="Enter your code here..." style="background-color: #e7edee;"></textarea>
+                <img src="/static/img/co_card.jpg" class="card-img-top"
+                    style="width: 35%; height: 15%; margin-bottom: 2%;" alt="...">
+                <h5 class="card-title">Code Optimizer</h5>
+                <textarea name="input_code" class="form-control" rows="1" placeholder="Enter your code here..."
+                    style="background-color: #e7edee;"></textarea>
                 <p></p>
                 <button type="submit" class="btn btn-primary">Optimize</button>
+                {% if not response %}
+                <p class="small text-start text-secondary mt-3">Powered by Gemini-Pro</p>
+                <p class="small text-start text-danger mt-2">
+                    Disclaimer: Your input and output data will be processed by Google. We do not store or use your data
+                    for any purpose. Kindly be aware and avoid sharing sensitive or personal information.
+                </p>
+                {% endif %}
             </div>
         </div>
     </form>
     {% if optimized_code %}
     <div class="response-container">
-        <div class="card text-white response-card"  style="background: transparent;">
+        <div class="card text-white response-card" style="background: transparent;">
             <div class="card-body">
                 <pre class="response-code">{{ optimized_code }}</pre>
             </div>

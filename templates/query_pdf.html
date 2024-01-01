@@ -19,13 +19,30 @@ margin-right: auto;
         {% csrf_token %}
         <div class="card text-center text-white" style="background: transparent;">
             <div class="card-body">
+                <img src="/static/img/summarizer.jpg" class="card-img-top"
+                    style="width: 35%; height: 15%; margin-bottom: 2%;" alt="...">
                 <h5 class="card-title">Query PDF</h5>
-                <p class="card-text">Upload the file.</p>
+
+                {% if not response %}
                 <input type="file" accept=".pdf" name="query_pdf_file" class="form-control">
                 <p> </p>
                 <input type="text" name="query_pdf_query" class="form-control" placeholder="Enter your query.">
                 <p> </p>
+                {% endif %}
+                
+                {% if response %}
+                <input type="text" name="query_pdf_query" class="form-control" placeholder="Enter another query.">
+                <p> </p>
+                {% endif %}
+                
                 <button type="submit" class="btn btn-primary">Submit</button>
+                {% if not response %}
+                <p class="small text-start text-secondary mt-3">Powered by Gemini-Pro</p>
+                <p class="small text-start text-danger mt-2">
+                    Disclaimer: Your input and output data will be processed by Google. We do not store or use your data
+                    for any purpose. Kindly be aware and avoid sharing sensitive or personal information.
+                </p>
+                {% endif %}
             </div>
         </div>
     </form>
