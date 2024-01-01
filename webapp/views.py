@@ -1,3 +1,5 @@
+import base64
+from io import BytesIO
 from django.shortcuts import render
 from django.http import JsonResponse
 from utils.prompt_to_sql import generate_sql_query
@@ -26,17 +28,29 @@ def query_pdf(request):
     title = "Query PDF"
     response = None
     user_query = None
-    if request.method == 'POST' and request.FILES['query_pdf_file']:
-        upload = request.FILES['query_pdf_file']
-        user_query = request.POST.get('query_pdf_query')
-        try:
-            result = pdf_query_generator(upload, user_query)
-            response = result['result']
-           
-        except:
-            response = "An error occurred while processing your request. Please try again later."
 
-    return render(request, 'query_pdf.html', {'title': title, 'query': user_query, 'response': response})
+    query_file = request.session.get('query_file', None)
+
+    if request.method == 'POST':
+        if 'query_pdf_file' in request.FILES:
+            query_file = request.FILES['query_pdf_file']
+            query_file = base64.b64encode(query_file.read()).decode('utf-8')
+            request.session['query_file'] = query_file
+
+            user_query = request.POST.get('query_pdf_query')
+            try:
+                query_file_content = base64.b64decode(query_file)
+                query_file = BytesIO(query_file_content)
+                query_file.name = "query_file.pdf"
+                result = pdf_query_generator(query_file, user_query)
+
+                response = result['result']
+                
+            except Exception as e:
+                print(e)
+                response = "An error occurred while processing your request. Please try again later."
+
+    return render(request, 'query_pdf.html', {'query_file': query_file, 'title': title, 'query': user_query, 'response': response})
 
 
 # Code Optimizer

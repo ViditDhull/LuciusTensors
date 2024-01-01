@@ -1,12 +1,10 @@
-import os
-import pickle
 from PyPDF2 import PdfReader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.vectorstores import FAISS
-from langchain.llms import OpenAI
 from utils.api_key import api_key
 from langchain.chains import RetrievalQA
+from langchain.vectorstores import Chroma
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 def pdf_query_generator(pdf, query):
 
@@ -24,23 +22,15 @@ def pdf_query_generator(pdf, query):
         )
         chunks = text_splitter.split_text(text=text)
 
+        embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key = api_key)
+        vec_store = Chroma.from_texts(chunks, embeddings)
         
-        file_name = pdf.name[:-4]
-        file_path = os.path.join("PDF_Embeddings", f"{file_name}.pkl")
-        if os.path.exists(file_path):
-            with open(file_path, 'rb') as f:
-                vec_store = pickle.load(f)
-        else:
-            embeddings = OpenAIEmbeddings(openai_api_key=api_key)
-            vec_store = FAISS.from_texts(chunks, embeddings)
-            with open(file_path, "wb") as f:
-                pickle.dump(vec_store, f)
 
         if query:
 
-            docs = vec_store.similarity_search(query=query, k=3)
-
-            llm = OpenAI(openai_api_key=api_key,)
+            llm = ChatGoogleGenerativeAI(model="gemini-pro",
+                               google_api_key = api_key,
+                             temperature=0.3, convert_system_message_to_human=True)
             qa_chain = RetrievalQA.from_chain_type(llm, retriever=vec_store.as_retriever())
             response = qa_chain({"query": query})
 
