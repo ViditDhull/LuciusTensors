@@ -23,14 +23,12 @@ margin-right: auto;
                     style="width: 35%; height: 15%; margin-bottom: 2%;" alt="...">
                 <h5 class="card-title">Query PDF</h5>
 
-                {% if not query_file %}
                 <input type="file" accept=".pdf" name="query_pdf_file" class="form-control">
                 <p> </p>
-                {% endif %}
-                
+
                 <input type="text" name="query_pdf_query" class="form-control" placeholder="Enter your query.">
                 <p> </p>
-                
+
                 <button type="submit" class="btn btn-primary">Submit</button>
                 {% if not response %}
                 <p class="small text-start text-secondary mt-3">Powered by Gemini-Pro</p>

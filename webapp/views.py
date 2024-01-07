@@ -1,7 +1,4 @@
-import base64
-from io import BytesIO
 from django.shortcuts import render
-from django.http import JsonResponse
 from utils.prompt_to_sql import generate_sql_query
 from utils.code_optimize import optimize_code
 from utils.query_pdf import pdf_query_generator
@@ -28,19 +25,13 @@ def query_pdf(request):
     title = "Query PDF"
     response = None
     user_query = None
-
-    query_file = request.session.get('query_file', None)
-
+    query_file = None
+    
     if request.method == 'POST':
         if 'query_pdf_file' in request.FILES:
             query_file = request.FILES['query_pdf_file']
-            query_file = base64.b64encode(query_file.read()).decode('utf-8')
-            request.session['query_file'] = query_file
-
             user_query = request.POST.get('query_pdf_query')
             try:
-                query_file_content = base64.b64decode(query_file)
-                query_file = BytesIO(query_file_content)
                 query_file.name = "query_file.pdf"
                 result = pdf_query_generator(query_file, user_query)
 

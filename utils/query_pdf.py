@@ -2,7 +2,7 @@ from PyPDF2 import PdfReader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from utils.api_key import api_key
 from langchain.chains import RetrievalQA
-from langchain.vectorstores import Chroma
+from langchain_community.vectorstores import Chroma
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_google_genai import ChatGoogleGenerativeAI
 
