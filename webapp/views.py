@@ -2,6 +2,8 @@ from django.shortcuts import render
 from utils.prompt_to_sql import generate_sql_query
 from utils.code_optimize import optimize_code
 from utils.query_pdf import pdf_query_generator
+from django.core.files.uploadedfile import InMemoryUploadedFile
+import io
 
 # Home
 def index(request):
@@ -26,20 +28,34 @@ def query_pdf(request):
     response = None
     user_query = None
     query_file = None
-    
+    global in_memory_pdf_buffer
+
     if request.method == 'POST':
         if 'query_pdf_file' in request.FILES:
             query_file = request.FILES['query_pdf_file']
-            user_query = request.POST.get('query_pdf_query')
-            try:
-                query_file.name = "query_file.pdf"
-                result = pdf_query_generator(query_file, user_query)
+            buffer = io.BytesIO()
+            for chunk in query_file.chunks():
+                buffer.write(chunk)
 
-                response = result['result']
+            # Store the in-memory PDF buffer for future use
+            in_memory_pdf_buffer = buffer
+
+        else:
+            if in_memory_pdf_buffer:
+            
+                query_file = InMemoryUploadedFile(
+                in_memory_pdf_buffer, None, 'example.pdf', 'application/pdf', len(in_memory_pdf_buffer.getvalue()), None
+                )
+        
+
+        user_query = request.POST.get('query_pdf_query')
+        try:
+            result = pdf_query_generator(query_file, user_query)
+            response = result['result']
                 
-            except Exception as e:
-                print(e)
-                response = "An error occurred while processing your request. Please try again later."
+        except Exception as e:
+            print(e)
+            response = "An error occurred while processing your request. Please try again later."
 
     return render(request, 'query_pdf.html', {'query_file': query_file, 'title': title, 'query': user_query, 'response': response})
 

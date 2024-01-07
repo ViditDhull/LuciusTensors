@@ -30,7 +30,7 @@ def pdf_query_generator(pdf, query):
 
             llm = ChatGoogleGenerativeAI(model="gemini-pro",
                                google_api_key = api_key,
-                             temperature=0.3, convert_system_message_to_human=True)
+                              convert_system_message_to_human=True)
             qa_chain = RetrievalQA.from_chain_type(llm, retriever=vec_store.as_retriever())
             response = qa_chain({"query": query})
 
