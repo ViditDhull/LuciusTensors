@@ -1,13 +1,9 @@
-import os
+from io import BytesIO
+import base64
 from django.shortcuts import render
 from utils.prompt_to_sql import generate_sql_query
 from utils.code_optimize import optimize_code
 from utils.query_pdf import pdf_query_generator
-from PyPDF2 import PdfReader
-from utils.api_key import gpt_api_key
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import FAISS
-from langchain.embeddings.openai import OpenAIEmbeddings
 
 
 # Home
@@ -39,33 +35,18 @@ def query_pdf(request):
             if 'query_pdf_file' in request.FILES:
                 query_file = request.FILES['query_pdf_file']
 
-                pdf_reader = PdfReader(query_file)
-                text = ""
-                for page in pdf_reader.pages:
-                    text += page.extract_text()
-
-                text_splitter = RecursiveCharacterTextSplitter(
-                    chunk_size=1000,
-                    chunk_overlap=200,
-                    length_function=len
-                )
-                chunks = text_splitter.split_text(text=text)
-
-                embeddings = OpenAIEmbeddings(openai_api_key=gpt_api_key)
-                vec_store = FAISS.from_texts(chunks, embeddings)
-
-                file_name = query_file.name[:-4]
-                request.session['uploaded_pdf_file_name'] = file_name
-                vec_store.save_local(os.path.join("PDF_Embeddings", f"{file_name}"))
-
+                query_file_base64 = base64.b64encode(query_file.read()).decode('utf-8')
+                # Store the base64-encoded string in the session
+                request.session['query_file_base64'] = query_file_base64
             else:
-                embeddings = OpenAIEmbeddings(openai_api_key=gpt_api_key)
-                file_name = request.session.get('uploaded_pdf_file_name', None)
-                vec_store = FAISS.load_local(os.path.join("PDF_Embeddings", f"{file_name}"), embeddings)
-        
+                query_file_base64 = request.session.get('query_file_base64', None)
+                query_file_content = base64.b64decode(query_file_base64)
+                query_file = BytesIO(query_file_content)
+
+                query_file.name = "query_file.pdf"
 
             user_query = request.POST.get('query_pdf_query')
-            result = pdf_query_generator(vec_store, user_query)
+            result = pdf_query_generator(query_file, user_query)
             response = result['result']
                 
     except Exception as e:
