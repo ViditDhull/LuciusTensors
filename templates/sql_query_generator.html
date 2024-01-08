@@ -24,14 +24,15 @@ margin-right: auto;
                 <h5 class="card-title">Prompt to SQL</h5>
                 <p class="card-text">Send a prompt.</p>
                 <input type="text" name="sql_prompt" class="form-control"
-                    placeholder="Try Something like: How many employees are older than 24?">
+                    placeholder="Try Something like: How many employees have been in company for more than 2 years?">
                 <p> </p>
                 <button type="submit" class="btn btn-primary">Submit</button>
                 {% if not response %}
-                <p class="small text-start text-secondary mt-3">Powered by Gemini-Pro</p>
+                <p class="small text-start text-secondary mt-3">Powered by GPT-3.5-turbo</p>
                 <p class="small text-start text-secondary mt-2">
-                    Disclaimer: Your input and output data will be processed by Google. We do not store or use your data
-                    for any purpose. Kindly be aware and avoid sharing sensitive or personal information.
+                    Disclaimer: OpenAI may securely retain API inputs and outputs for up to 30 days to identify abuse.
+                    We do not store or use your data for any purpose. 
+                    Kindly be aware and avoid sharing sensitive or personal information.
                 </p>
                 {% endif %}
             </div>
@@ -42,6 +43,9 @@ margin-right: auto;
         <div class="card text-center text-white response-card bg-black" style="background: transparent;">
             <div class="card-body">
                 {{ response }}
+                <p class="small text-start text-secondary mt-3">Please note that assumed names for tables and columns
+                    are used in the generated query for clarity, and you may need to replace them with actual database
+                    object names as per your schema.</p>
             </div>
         </div>
     </div>

@@ -1,11 +1,14 @@
-from utils.api_key import api_key
-import google.generativeai as genai
+from utils.api_key import gpt_api_key
+from openai import OpenAI
 
-genai.configure(api_key = api_key)
 
 def generate_sql_query(nlp_prompt):
-    prompt = f"Write a sql query for this prompt and do not inlcude 'sql' or any other text in response {nlp_prompt}"
-    model = genai.GenerativeModel('gemini-pro')
-    response = model.generate_content(prompt)
+    client = OpenAI(api_key=gpt_api_key)
+
+    chat_completion = client.chat.completions.create(
+        messages=[ {"role": "system", "content":"I am expert in generating sql query from natural language. Assume default names and schema if specific information is not provided. Return only the query"},
+                   {'role': 'user', 'content': nlp_prompt} ],
+        model="gpt-3.5-turbo"
+    )
     
-    return response.text
+    return chat_completion.choices[0].message.content.strip()

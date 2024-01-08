@@ -1,10 +1,12 @@
 from PyPDF2 import PdfReader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from utils.api_key import api_key
+from utils.api_key import gpt_api_key
 from langchain.chains import RetrievalQA
-from langchain_community.vectorstores import Chroma
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_community.vectorstores import FAISS
+from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain_community.llms import OpenAI
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 def pdf_query_generator(pdf, query):
 
@@ -22,15 +24,13 @@ def pdf_query_generator(pdf, query):
         )
         chunks = text_splitter.split_text(text=text)
 
-        embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key = api_key)
-        vec_store = Chroma.from_texts(chunks, embeddings)
+        embeddings = OpenAIEmbeddings(openai_api_key=gpt_api_key)
+        vec_store = FAISS.from_texts(chunks, embeddings)
         
 
         if query:
 
-            llm = ChatGoogleGenerativeAI(model="gemini-pro",
-                               google_api_key = api_key,
-                              convert_system_message_to_human=True)
+            llm = OpenAI(openai_api_key=gpt_api_key)
             qa_chain = RetrievalQA.from_chain_type(llm, retriever=vec_store.as_retriever())
             response = qa_chain({"query": query})
 
