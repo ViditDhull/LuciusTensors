@@ -33,8 +33,6 @@ def query_pdf(request):
     response = None
     user_query = None
     query_file = None
-    global file_name
-    global file_path
 
     try:
         if request.method == 'POST':
@@ -57,12 +55,13 @@ def query_pdf(request):
                 vec_store = FAISS.from_texts(chunks, embeddings)
 
                 file_name = query_file.name[:-4]
-
-                vec_store.save_local(os.path.join("PDF_Embeddings", f"PDF_Embeddings/{file_name}"))
+                request.session['uploaded_pdf_file_name'] = file_name
+                vec_store.save_local(os.path.join("PDF_Embeddings", f"{file_name}"))
 
             else:
                 embeddings = OpenAIEmbeddings(openai_api_key=gpt_api_key)
-                vec_store = FAISS.load_local(os.path.join("PDF_Embeddings", f"PDF_Embeddings/{file_name}"), embeddings)
+                file_name = request.session.get('uploaded_pdf_file_name', None)
+                vec_store = FAISS.load_local(os.path.join("PDF_Embeddings", f"{file_name}"), embeddings)
         
 
             user_query = request.POST.get('query_pdf_query')
