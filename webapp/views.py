@@ -1,9 +1,14 @@
+import os
 from django.shortcuts import render
 from utils.prompt_to_sql import generate_sql_query
 from utils.code_optimize import optimize_code
 from utils.query_pdf import pdf_query_generator
-from django.core.files.uploadedfile import InMemoryUploadedFile
-import io
+from PyPDF2 import PdfReader
+from utils.api_key import gpt_api_key
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_community.vectorstores import FAISS
+from langchain.embeddings.openai import OpenAIEmbeddings
+
 
 # Home
 def index(request):
@@ -28,36 +33,48 @@ def query_pdf(request):
     response = None
     user_query = None
     query_file = None
-    global in_memory_pdf_buffer
+    global file_name
+    global file_path
 
-    if request.method == 'POST':
-        if 'query_pdf_file' in request.FILES:
-            query_file = request.FILES['query_pdf_file']
-            buffer = io.BytesIO()
-            for chunk in query_file.chunks():
-                buffer.write(chunk)
+    try:
+        if request.method == 'POST':
+            if 'query_pdf_file' in request.FILES:
+                query_file = request.FILES['query_pdf_file']
 
-            # Store the in-memory PDF buffer for future use
-            in_memory_pdf_buffer = buffer
+                pdf_reader = PdfReader(query_file)
+                text = ""
+                for page in pdf_reader.pages:
+                    text += page.extract_text()
 
-        else:
-            if in_memory_pdf_buffer:
-            
-                query_file = InMemoryUploadedFile(
-                in_memory_pdf_buffer, None, 'example.pdf', 'application/pdf', len(in_memory_pdf_buffer.getvalue()), None
+                text_splitter = RecursiveCharacterTextSplitter(
+                    chunk_size=1000,
+                    chunk_overlap=200,
+                    length_function=len
                 )
+                chunks = text_splitter.split_text(text=text)
+
+                embeddings = OpenAIEmbeddings(openai_api_key=gpt_api_key)
+                vec_store = FAISS.from_texts(chunks, embeddings)
+
+                file_name = query_file.name[:-4]
+
+                vec_store.save_local(os.path.join("PDF_Embeddings", f"PDF_Embeddings/{file_name}"))
+
+            else:
+                embeddings = OpenAIEmbeddings(openai_api_key=gpt_api_key)
+                vec_store = FAISS.load_local(os.path.join("PDF_Embeddings", f"PDF_Embeddings/{file_name}"), embeddings)
         
 
-        user_query = request.POST.get('query_pdf_query')
-        try:
-            result = pdf_query_generator(query_file, user_query)
+            user_query = request.POST.get('query_pdf_query')
+            result = pdf_query_generator(vec_store, user_query)
             response = result['result']
                 
-        except Exception as e:
-            print(e)
-            response = "An error occurred while processing your request. Please try again later."
+    except Exception as e:
+        print(e)
+        user_query = request.POST.get('query_pdf_query')
+        response = "An error occurred while processing your request. Please try again later."
 
-    return render(request, 'query_pdf.html', {'query_file': query_file, 'title': title, 'query': user_query, 'response': response})
+    return render(request, 'query_pdf.html', {'title': title, 'query': user_query, 'response': response})
 
 
 # Code Optimizer
