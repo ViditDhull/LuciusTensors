@@ -23,7 +23,8 @@ margin-right: auto;
                     style="width: 35%; height: 15%; margin-bottom: 2%;" alt="...">
                 <h5 class="card-title">Query PDF</h5>
                 {% if not response %}
-                <input type="file" accept=".pdf" name="query_pdf_file" class="form-control">
+                <label for="id_query_pdf_file">Upload PDF (Max size: 20 MB):</label>
+                <input type="file" accept=".pdf" name="query_pdf_file" id="id_query_pdf_file" class="form-control">
                 <p> </p>
                 <input type="text" name="query_pdf_query" class="form-control" placeholder="Enter your query.">
                 <p> </p>
