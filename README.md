@@ -8,9 +8,9 @@ LuciusTensors is a platform where technology, data science, and machine learning
 
 ## Features
 
-- **AI Code Optimizer:** Elevate your code's efficiency with our AI Code Optimizer.
+- **QueryPDF:** Upload a PDF and ask questions to extract relevant information.
 - **SQL Query Generator:** Craft precise queries effortlessly with our AI-powered SQL Query Generator.
-- **QueryPDF (Upcoming):** Upload a PDF and ask questions to extract relevant information.
+- **AI Code Optimizer:** Elevate your code's efficiency with our AI Code Optimizer.
 
 ## Getting Started
 
