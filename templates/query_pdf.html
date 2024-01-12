@@ -33,9 +33,14 @@ margin-right: auto;
                 {% if response %}
                 <input type="text" name="query_pdf_query" class="form-control" placeholder="Enter another query.">
                 <p> </p>
-                {% endif %}
                 <button type="submit" class="btn btn-primary">Submit</button>
+                <p> </p>
+                <a href="query_pdf" class="btn btn-primary">Upload Another PDF</a>
+                <p> </p>
+                {% endif %}
+
                 {% if not response %}
+                <button type="submit" class="btn btn-primary">Submit</button>
                 <p class="small text-start text-secondary mt-3">Powered by GPT-3.5-turbo</p>
                 <p class="small text-start text-secondary mt-2">
                     Disclaimer: OpenAI may securely retain API inputs and outputs for up to 30 days to identify abuse.

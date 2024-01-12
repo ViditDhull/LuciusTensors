@@ -5,24 +5,21 @@ width: 250px;
 margin-top: 17%;
 margin-left: auto;
 margin-right: auto;
-margin-bottom: 30%;
-max-block-size: 70%;
+max-block-size: auto;
 }
 .text-center{
 margin-top: 40px;
 margin-bottom: 10px;
-margin-left: 10%;
-margin-right: 10%;
 border-radius: 15px;
 padding: 12px;
 }
 .btn-primary {
-  background-color: #277474; /* Change this color to your desired color */
-  border-color: #277474; /* Border color */
+background-color: #277474; /* Change this color to your desired color */
+border-color: #277474; /* Border color */
 }
 .btn-secondary {
-  background-color: #505960; /* Change this color to your desired color */
-  border-color: #505960; /* Border color */
+background-color: #505960; /* Change this color to your desired color */
+border-color: #505960; /* Border color */
 }
 {% endblock cardclass %}
 
@@ -30,9 +27,8 @@ padding: 12px;
 
 <div class="text-center">
   <h1 class="text-white">LuciusTensors</h1>
-  <p class="text-white">Experience the future with our collection of AI-powered products, all in one place.
-    <br>Discover seamless efficiency and speed through our range of OpenAI API integrated solutions.
-  </p>
+  <p class="text-white">Experience the future with our collection of AI-powered products, all in one place.</p>
+  <p class="text-white">Discover seamless efficiency and speed through our range of OpenAI API integrated solutions.</p>
 </div>
 
 <div class="row row-cols-1 row-cols-md-3 g-0">
@@ -44,7 +40,7 @@ padding: 12px;
         <h5 class="card-title">Query PDF</h5>
         <p class="card-text">Transform PDFs into interactive knowledge hubs—ask questions, extract insights, and unleash
           the potential of your documents with AI.</p>
-          <a href="query_pdf" class="btn btn-primary">Try now&#x2197</a>
+        <a href="query_pdf" class="btn btn-primary">Try now&#x2197</a>
       </div>
     </div>
   </div>
@@ -72,7 +68,15 @@ padding: 12px;
       </div>
     </div>
   </div>
+</div>
 
-
+<div class="text-center">
+  <p style="text-align: center;"><a href="privacy_policy" style="text-decoration: none; color: white;">Privacy
+      Policy</a>
+    |
+    <a href="https://github.com/ViditDhull/LuciusTensors" style="text-decoration: none; color: white;"
+      target="_blank">GitHub Repository</a>
+  </p>
+  <p style="color: white;">Made by Vidit Dhull</p>
 </div>
 {% endblock cardbody %}

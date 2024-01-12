@@ -75,6 +75,6 @@ def code_optimizer(request):
 def about(request):
     return render(request, 'about.html')
 
-# Upcoming
-def upcoming(request):
-    return render(request, 'upcoming.html')
+# Privacy Policy
+def privacy_policy(request):
+    return render(request, 'privacy_policy.html')
