@@ -9,4 +9,4 @@ sys.path.append(base_dir)
 
 from ai_key import openai_api_key
 
-gpt_api_key = openai_api_key
+openai_api_key = openai_api_key

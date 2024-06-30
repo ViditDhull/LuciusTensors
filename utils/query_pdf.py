@@ -1,4 +1,4 @@
-from utils.api_key import gpt_api_key
+from utils.api_key import openai_api_key
 from langchain.chains import RetrievalQA
 from PyPDF2 import PdfReader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -22,10 +22,10 @@ def pdf_query_generator(pdf_file, query):
                 )
     chunks = text_splitter.split_text(text=text)
 
-    embeddings = OpenAIEmbeddings(openai_api_key=gpt_api_key)
+    embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
     vec_store = FAISS.from_texts(chunks, embeddings)
     
-    llm = OpenAI(openai_api_key=gpt_api_key)
+    llm = OpenAI(openai_api_key=openai_api_key)
     qa_chain = RetrievalQA.from_chain_type(llm, retriever=vec_store.as_retriever())
     response = qa_chain({"query": query})
 
