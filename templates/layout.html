@@ -29,6 +29,17 @@
             color: rgba(255, 255, 255, 0.75);
         }
 
+        .navbar-fixed {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000; /* Ensure the navbar stays on top */
+        }
+
+        body {
+            padding-top: 35px; /* Adjust based on the navbar height */
+        }
+
     {% block cardclass %} {% endblock %}
     </style>
     <script>
@@ -44,7 +55,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg ">
+    <nav class="navbar navbar-expand-lg navbar-fixed">
         <div class="container-fluid">
             <a class="navbar-brand navbar-dark" href="home">LuciusTensors</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
