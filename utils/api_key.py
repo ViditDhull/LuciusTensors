@@ -8,5 +8,7 @@ base_dir = os.path.dirname(os.path.realpath(parent_dir_1))
 sys.path.append(base_dir)
 
 from ai_key import openai_api_key
+from ai_key import g_api_key
 
 openai_api_key = openai_api_key
+g_api_key = g_api_key

@@ -1,10 +1,9 @@
-from io import BytesIO
-import base64
 from django.shortcuts import render
 from utils.prompt_to_sql import generate_sql_query
 from utils.code_optimize import optimize_code
 from utils.query_pdf import pdf_query_generator
-
+from django.core.files.uploadedfile import InMemoryUploadedFile
+import io
 
 # Home
 def index(request):
@@ -29,32 +28,36 @@ def query_pdf(request):
     response = None
     user_query = None
     query_file = None
+    global in_memory_pdf_buffer
 
-    try:
-        if request.method == 'POST':
-            if 'query_pdf_file' in request.FILES:
-                query_file = request.FILES['query_pdf_file']
+    if request.method == 'POST':
+        if 'query_pdf_file' in request.FILES:
+            query_file = request.FILES['query_pdf_file']
+            buffer = io.BytesIO()
+            for chunk in query_file.chunks():
+                buffer.write(chunk)
 
-                query_file_base64 = base64.b64encode(query_file.read()).decode('utf-8')
-                # Store the base64-encoded string in the session
-                request.session['query_file_base64'] = query_file_base64
-            else:
-                query_file_base64 = request.session.get('query_file_base64', None)
-                query_file_content = base64.b64decode(query_file_base64)
-                query_file = BytesIO(query_file_content)
+            # Store the in-memory PDF buffer for future use
+            in_memory_pdf_buffer = buffer
 
-                query_file.name = "query_file.pdf"
+        else:
+            if in_memory_pdf_buffer:
+            
+                query_file = InMemoryUploadedFile(
+                in_memory_pdf_buffer, None, 'example.pdf', 'application/pdf', len(in_memory_pdf_buffer.getvalue()), None
+                )
+        
 
-            user_query = request.POST.get('query_pdf_query')
+        user_query = request.POST.get('query_pdf_query')
+        try:
             result = pdf_query_generator(query_file, user_query)
             response = result['result']
                 
-    except Exception as e:
-        print(e)
-        user_query = request.POST.get('query_pdf_query')
-        response = "An error occurred while processing your request. Please try again later."
+        except Exception as e:
+            print(e)
+            response = "An error occurred while processing your request. Please try again later."
 
-    return render(request, 'query_pdf.html', {'title': title, 'query': user_query, 'response': response})
+    return render(request, 'query_pdf.html', {'query_file': query_file, 'title': title, 'query': user_query, 'response': response})
 
 
 # Code Optimizer
@@ -75,6 +78,6 @@ def code_optimizer(request):
 def about(request):
     return render(request, 'about.html')
 
-# Privacy Policy
+# Upcoming
 def privacy_policy(request):
     return render(request, 'privacy_policy.html')

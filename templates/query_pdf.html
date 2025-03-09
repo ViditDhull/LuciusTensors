@@ -23,8 +23,7 @@ margin-right: auto;
                     style="width: 35%; height: 15%; margin-bottom: 2%;" alt="...">
                 <h5 class="card-title">Query PDF</h5>
                 {% if not response %}
-                <label for="id_query_pdf_file">Upload PDF (Max size: 20 MB):</label>
-                <input type="file" accept=".pdf" name="query_pdf_file" id="id_query_pdf_file" class="form-control">
+                <input type="file" accept=".pdf" name="query_pdf_file" class="form-control">
                 <p> </p>
                 <input type="text" name="query_pdf_query" class="form-control" placeholder="Enter your query.">
                 <p> </p>
@@ -38,14 +37,12 @@ margin-right: auto;
                 <a href="query_pdf" class="btn btn-primary">Upload Another PDF</a>
                 <p> </p>
                 {% endif %}
-
                 {% if not response %}
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <p class="small text-start text-secondary mt-3">Powered by GPT-3.5-turbo</p>
+                <p class="small text-start text-secondary mt-3">Powered by Gemini-1.5-flash</p>
                 <p class="small text-start text-secondary mt-2">
-                    Disclaimer: OpenAI may securely retain API inputs and outputs for up to 30 days to identify abuse.
-                    We do not store or use your data for any purpose.
-                    Kindly be aware and avoid sharing sensitive or personal information.
+                    Disclaimer: Your input and output data will be processed by Google. We do not store or use your data
+                    for any purpose. Kindly be aware and avoid sharing sensitive or personal information.
                 </p>
                 {% endif %}
             </div>

@@ -1,14 +1,21 @@
-from utils.api_key import openai_api_key
-from openai import OpenAI
+from utils.api_key import g_api_key
+import google.generativeai as genai
 
+genai.configure(api_key = g_api_key)
 
-def optimize_code(nlp_prompt):
-    client = OpenAI(api_key=openai_api_key)
+def optimize_code(user_code):
+    try:
+        prompt = f"""
+                You are an expert code optimizer. Optimize the following code for readability, efficiency, and best practices, 
+                while strictly preserving its original functionality. Explain the changes you made in a very short comment before presenting the optimized code.
+                
+                Code to optimize:\n\n{user_code}
 
-    chat_completion = client.chat.completions.create(
-        messages=[ {"role": "system", "content":"I am expert in optimizing the given code while preserving its original functionality"},
-                   {'role': 'user', 'content': nlp_prompt} ],
-        model="gpt-3.5-turbo"
-    )
-    
-    return chat_completion.choices[0].message.content.strip()
+                Optimized Code:
+            """
+        model = genai.GenerativeModel(model_name='gemini-1.5-flash')
+        response = model.generate_content(prompt)
+        
+        return response.text
+    except Exception as e:
+        return f"Error optimizing code: {str(e)}"
